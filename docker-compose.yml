@@ -1,0 +1,64 @@
+services:
+  postgres-category-write:
+    image: postgres:16
+    container_name: postgres-category-write
+    ports:
+      - "5432:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "category_write_db"
+    volumes:
+      - postgres_category_write_data:/var/lib/postgresql/data
+
+  postgres-category-read:
+    image: postgres:16
+    container_name: postgres-category-read
+    ports:
+      - "5434:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "category_read_db"
+    volumes:
+      - postgres_category_read_data:/var/lib/postgresql/data
+
+  postgres-notes-write:
+    image: postgres:16
+    container_name: postgres-notes-write
+    ports:
+      - "5433:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "notes_write_db"
+    volumes:
+      - postgres_notes_write_data:/var/lib/postgresql/data
+
+  postgres-notes-read:
+    image: postgres:16
+    container_name: postgres-notes-read
+    ports:
+      - "5435:5432"
+    environment:
+      POSTGRES_USER: "postgres"
+      POSTGRES_PASSWORD: "postgres"
+      POSTGRES_DB: "notes_read_db"
+    volumes:
+      - postgres_notes_read_data:/var/lib/postgresql/data
+
+  rabbitmq:
+    image: rabbitmq:3-management
+    container_name: rabbitmq
+    ports:
+      - "5672:5672"
+      - "15672:15672"
+    environment:
+      RABBITMQ_DEFAULT_USER: "guest"
+      RABBITMQ_DEFAULT_PASS: "guest"
+
+volumes:
+  postgres_category_write_data:
+  postgres_category_read_data:
+  postgres_notes_write_data:
+  postgres_notes_read_data:
