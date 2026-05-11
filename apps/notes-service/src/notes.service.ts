@@ -27,9 +27,9 @@ export class NotesService {
     }
   }
 
-  async findAll() {
-    return this.notesRepository.find();
-  }
+  // async findAll() {
+  //   return this.notesRepository.find();
+  // }
 
   async findOne(id: string) {
     const note = await this.notesRepository.findOne({ where: { id } });
@@ -72,7 +72,9 @@ export class NotesService {
       if (driverError.code === '23505') {
         throw new RpcException({
           status: HttpStatus.CONFLICT,
-          message: noteTitle ? `Note with title "${noteTitle}" already exists` : 'Note already exists',
+          message: noteTitle
+            ? `Note with title "${noteTitle}" already exists`
+            : 'Note already exists',
         });
       }
     }

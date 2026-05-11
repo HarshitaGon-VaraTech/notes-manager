@@ -29,10 +29,6 @@ export class CategoriesService {
     }
   }
 
-  async findAll() {
-    return this.categoriesRepository.find();
-  }
-
   async findOne(id: string) {
     const category = await this.categoriesRepository.findOne({ where: { id } });
     if (!category) {
@@ -62,7 +58,11 @@ export class CategoriesService {
 
   private handlePersistenceError(error: unknown, categoryName?: string): never {
     if (error instanceof QueryFailedError) {
-      const driverError = error.driverError as { code?: string; detail?: string; message?: string };
+      const driverError = error.driverError as {
+        code?: string;
+        detail?: string;
+        message?: string;
+      };
 
       if (driverError.code === '23505') {
         throw new RpcException({
@@ -74,7 +74,9 @@ export class CategoriesService {
       }
 
       if (driverError.code === '42P01') {
-        this.logger.error('Category write table is missing. Run migrations or restart the service to auto-run them.');
+        this.logger.error(
+          'Category write table is missing. Run migrations or restart the service to auto-run them.',
+        );
       }
     }
 

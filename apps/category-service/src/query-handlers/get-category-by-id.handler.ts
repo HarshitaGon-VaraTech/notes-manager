@@ -14,15 +14,17 @@ export class GetCategoryByIdHandler implements IQueryHandler<GetCategoryByIdQuer
   ) {}
 
   async execute(query: GetCategoryByIdQuery) {
-    const category = await this.categoryReadRepository.findOne({ where: { id: query.id } });
-    
+    const category = await this.categoryReadRepository.findOne({
+      where: { id: query.id },
+    });
+
     if (!category) {
       throw new RpcException({
         status: HttpStatus.NOT_FOUND,
         message: `Category with id ${query.id} not found`,
       });
     }
-    
+
     return category;
   }
 }
